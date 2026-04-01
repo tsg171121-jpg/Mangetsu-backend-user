@@ -1,4 +1,4 @@
-import { methodNotAllowed, readBody, sendJson, supabaseForRequest, unauthorized } from './_utils';
+import { methodNotAllowed, readBody, sendJson, supabaseForRequest, unauthorized } from './_utils.js';
 
 // Table: library_items
 // - id uuid (pk)
