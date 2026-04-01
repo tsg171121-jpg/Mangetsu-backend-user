@@ -37,3 +37,26 @@ using (user_id = auth.uid());
 create index if not exists library_items_user_updated_at_idx
 on public.library_items (user_id, updated_at desc);
 
+-- User profile (username)
+create table if not exists public.profiles (
+  user_id uuid primary key default auth.uid(),
+  username text not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.profiles enable row level security;
+
+create policy "profiles_select_own"
+on public.profiles for select
+using (user_id = auth.uid());
+
+create policy "profiles_insert_own"
+on public.profiles for insert
+with check (user_id = auth.uid());
+
+create policy "profiles_update_own"
+on public.profiles for update
+using (user_id = auth.uid())
+with check (user_id = auth.uid());
+
